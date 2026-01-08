@@ -37,7 +37,8 @@ class EquipController extends Controller
 
     // GET /equips/{equip}/edit
     public function edit(Equip $equip) {
-        return view('equips.edit', compact('equip'));
+        $estadis = Estadi::all();
+        return view('equips.edit', compact('equip', 'estadis'));
     }
 
     // PUT /equips/{equip}
