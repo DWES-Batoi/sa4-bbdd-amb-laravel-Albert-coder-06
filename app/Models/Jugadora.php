@@ -16,8 +16,8 @@ class Jugadora extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function equip()
+    public function equip_rel()
     {
-        return $this->belongsTo(Equip::class);
+        return $this->belongsTo(Equip::class, 'equip');
     }
 }

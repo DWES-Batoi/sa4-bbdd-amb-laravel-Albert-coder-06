@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nom')->unique();
             $table->string('posicio');
             $table->foreignId('equip')->constrained('equips')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

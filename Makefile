@@ -12,7 +12,7 @@ reset:
 	rm -rf vendor node_modules bootstrap/cache/*.php public/storage
 	rm -f .env
 
-sh:
+sh:dd
 	docker compose exec -u www-data app bash
 
 logs:

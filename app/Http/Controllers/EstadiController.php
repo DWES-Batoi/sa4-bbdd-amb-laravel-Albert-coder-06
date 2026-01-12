@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEstadiRequest;
+use App\Http\Requests\UpdateEstadiRequest;
 use App\Models\Estadi;
-use Illuminate\Http\Request;
+use App\Services\EstadiService;
 
 class EstadiController extends Controller
 {
+    public function __construct(private EstadiService $servei) {}
+
     // GET /estadis
     public function index()
     {
-        $estadis = Estadi::all();
+        $estadis = $this->servei->llistar();
         return view('estadis.index', compact('estadis'));
     }
 
@@ -27,10 +31,9 @@ class EstadiController extends Controller
     }
 
     // POST /estadis
-    public function store(Request $request)
+    public function store(StoreEstadiRequest $request)
     {
-        $estadi = new Estadi($request->all());
-        $estadi->save();
+        $this->servei->guardar($request->validated());
 
         return redirect()
             ->route('estadis.index')
@@ -44,9 +47,9 @@ class EstadiController extends Controller
     }
 
     // PUT/PATCH /estadis/{estadi}
-    public function update(Request $request, Estadi $estadi)
+    public function update(UpdateEstadiRequest $request, Estadi $estadi)
     {
-        $estadi->update($request->all());
+        $this->servei->actualitzar($estadi->id, $request->validated());
 
         return redirect()
             ->route('estadis.index')
@@ -56,7 +59,7 @@ class EstadiController extends Controller
     // DELETE /estadis/{estadi}
     public function destroy(Estadi $estadi)
     {
-        $estadi->delete();
+        $this->servei->eliminar($estadi->id);
 
         return redirect()
             ->route('estadis.index')

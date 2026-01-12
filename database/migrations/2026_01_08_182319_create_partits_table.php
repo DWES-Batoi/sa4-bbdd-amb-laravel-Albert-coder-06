@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('partits', function (Blueprint $table) {
             $table->id();
+            $table->string('local');
+            $table->string('visitant');
+            $table->date('data');
+            $table->string('resultat')->nullable();
             $table->timestamps();
         });
     }
