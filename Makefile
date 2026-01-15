@@ -40,3 +40,7 @@ artisan:
 	@docker compose run --rm app php artisan $(CMD)
 	@true
 
+composer:
+	@docker compose run --rm app composer $(CMD)
+	@true
+

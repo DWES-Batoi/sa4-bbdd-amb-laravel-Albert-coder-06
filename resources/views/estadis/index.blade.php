@@ -1,37 +1,39 @@
-@extends('layouts.app')
+@extends('layouts.equip')
+
 @section('title', "Guia d'Estadis")
 
+@section('header_actions')
+    <a href="{{ route('estadis.create') }}" class="btn btn--primary">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        Nou Estadi
+    </a>
+@endsection
+
 @section('content')
-<h1 class="text-3xl font-bold text-blue-800 mb-6">Guia d'Estadis</h1>
+<div class="grid-cards">
+    @foreach ($estadis as $estadi)
+        <article class="card">
+            <header class="card__header">
+                <h2 class="card__title">{{ $estadi->nom }}</h2>
+                <span class="card__badge">ID: {{ $estadi->id }}</span>
+            </header>
 
-@if (session('success'))
-  <div class="bg-green-100 text-green-700 p-2 mb-4">{{ session('success') }}</div>
-@endif
+            <div class="card__body">
+                <p><strong>Capacitat:</strong> {{ number_format($estadi->capacitat, 0, ',', '.') }} espectadors</p>
+                <p><strong>Equips:</strong> {{ $estadi->equips->count() }}</p>
+            </div>
 
-<p class="mb-4">
-  <a href="{{ route('estadis.create') }}" class="bg-blue-600 text-white px-3 py-2 rounded">
-    Nou Estadi
-  </a>
-</p>
+            <footer class="card__footer">
+                <a class="btn btn--ghost flex-1" href="{{ route('estadis.show', $estadi) }}">Ver</a>
+                <a class="btn btn--ghost flex-1" href="{{ route('estadis.edit', $estadi) }}">Editar</a>
 
-<table class="w-full border-collapse border border-gray-300">
-  <thead class="bg-gray-200">
-    <tr>
-      <th class="border border-gray-300 p-2">Nom</th>
-      <th class="border border-gray-300 p-2">Capacitat</th>
-    </tr>
-  </thead>
-  <tbody>
-  @foreach($estadis as $estadi)
-    <tr class="hover:bg-gray-100">
-      <td class="border border-gray-300 p-2">
-        <a href="{{ route('estadis.show', $estadi->id) }}" class="text-blue-700 hover:underline">
-          {{ $estadi->nom }}
-        </a>
-      </td>
-      <td class="border border-gray-300 p-2">{{ $estadi->capacitat }}</td>
-    </tr>
-  @endforeach
-  </tbody>
-</table>
+                <form method="POST" action="{{ route('estadis.destroy', $estadi) }}" class="inline flex-1">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn--danger w-full" type="submit" onclick="return confirm('Estàs segur?')">Eliminar</button>
+                </form>
+            </footer>
+        </article>
+    @endforeach
+</div>
 @endsection
