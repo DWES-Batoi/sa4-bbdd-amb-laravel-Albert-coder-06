@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             EquipsSeeder::class,
             PartitsSeeder::class,
             JugadorasSeeder::class,
+            UserSeeder::class,
         ]);
 
         // Opcional: per veure que acaba
