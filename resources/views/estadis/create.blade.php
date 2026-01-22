@@ -1,46 +1,32 @@
 @extends('layouts.equip')
-@section('title', 'Afegir nou estadi')
+
+@section('title', __('Afegir nou estadi'))
 
 @section('content')
-<h1 class="text-2xl font-bold mb-4">Afegir nou estadi</h1>
+<div class="max-w-2xl mx-auto">
+    <form action="{{ route('estadis.store') }}" method="POST" class="space-y-6">
+        @csrf
 
-@if ($errors->any())
-  <div class="bg-red-100 text-red-700 p-2 mb-4">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
+        <div class="space-y-2">
+            <x-input-label for="nom" :value="__('Nom')" />
+            <x-text-input id="nom" name="nom" type="text" :value="old('nom')" required autofocus />
+            <x-input-error :messages="$errors->get('nom')" />
+        </div>
 
-<form action="{{ route('estadis.store') }}" method="POST" class="space-y-4">
-  @csrf
+        <div class="space-y-2">
+            <x-input-label for="capacitat" :value="__('Capacitat')" />
+            <x-text-input id="capacitat" name="capacitat" type="number" :value="old('capacitat')" required />
+            <x-input-error :messages="$errors->get('capacitat')" />
+        </div>
 
-  <div>
-    <label for="nom" class="block font-bold">Nom:</label>
-    <input
-      type="text"
-      name="nom"
-      id="nom"
-      value="{{ old('nom') }}"
-      class="border p-2 w-full"
-    >
-  </div>
-
-  <div>
-    <label for="capacitat" class="block font-bold">Capacitat:</label>
-    <input
-      type="text"
-      name="capacitat"
-      id="capacitat"
-      value="{{ old('capacitat') }}"
-      class="border p-2 w-full"
-    >
-  </div>
-
-  <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-    Afegir
-  </button>
-</form>
+        <div class="flex items-center justify-end gap-4 pt-4">
+            <a href="{{ route('estadis.index') }}" class="btn btn--ghost">
+                {{ __('Cancel·lar') }}
+            </a>
+            <x-primary-button>
+                {{ __('Afegir Estadi') }}
+            </x-primary-button>
+        </div>
+    </form>
+</div>
 @endsection

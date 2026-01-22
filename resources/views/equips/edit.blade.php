@@ -1,59 +1,45 @@
 @extends('layouts.equip')
-@section('title', 'Editar equip')
+
+@section('title', __('Editar equip'))
 
 @section('content')
-<h1 class="text-2xl font-bold mb-4">Editar equip</h1>
+<div class="max-w-2xl mx-auto">
+    <form action="{{ route('equips.update', $equip) }}" method="POST" class="space-y-6">
+        @csrf
+        @method('PUT')
 
-@if ($errors->any())
-  <div class="bg-red-100 text-red-700 p-2 mb-4">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
+        <div class="space-y-2">
+            <x-input-label for="nom" :value="__('Nom')" />
+            <x-text-input id="nom" name="nom" type="text" :value="old('nom', $equip->nom)" required autofocus />
+            <x-input-error :messages="$errors->get('nom')" />
+        </div>
 
-<form action="{{ route('equips.update', $equip) }}" method="POST" class="space-y-4">
-  @csrf
-  @method('PUT')
+        <div class="space-y-2">
+            <x-input-label for="estadi_id" :value="__('Estadi')" />
+            <select name="estadi_id" id="estadi_id" class="w-full px-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 text-slate-700 dark:text-slate-200 shadow-sm">
+                @foreach ($estadis as $estadi)
+                    <option value="{{ $estadi->id }}" {{ old('estadi_id', $equip->estadi_id) == $estadi->id ? 'selected' : '' }}>
+                        {{ $estadi->nom }}
+                    </option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('estadi_id')" />
+        </div>
 
-  <div>
-    <label for="nom" class="block font-bold">Nom:</label>
-    <input
-      type="text"
-      name="nom"
-      id="nom"
-      value="{{ old('nom', $equip->nom) }}"
-      class="border p-2 w-full"
-    >
-  </div>
+        <div class="space-y-2">
+            <x-input-label for="titols" :value="__('Títols')" />
+            <x-text-input id="titols" name="titols" type="number" :value="old('titols', $equip->titols)" required />
+            <x-input-error :messages="$errors->get('titols')" />
+        </div>
 
-  <div>
-    <label for="estadi_id" class="block font-bold">Estadi:</label>
-    <select name="estadi_id" id="estadi_id" class="border p-2 w-full">
-      @foreach ($estadis as $estadi)
-        <option value="{{ $estadi->id }}"
-          {{ old('estadi_id', $equip->estadi_id) == $estadi->id ? 'selected' : '' }}>
-          {{ $estadi->nom }}
-        </option>
-      @endforeach
-    </select>
-  </div>
-
-  <div>
-    <label for="titols" class="block font-bold">Títols:</label>
-    <input
-      type="number"
-      name="titols"
-      id="titols"
-      value="{{ old('titols', $equip->titols) }}"
-      class="border p-2 w-full"
-    >
-  </div>
-
-  <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-    Actualitzar
-  </button>
-</form>
+        <div class="flex items-center justify-end gap-4 pt-4">
+            <a href="{{ route('equips.index') }}" class="btn btn--ghost">
+                {{ __('Cancel·lar') }}
+            </a>
+            <x-primary-button>
+                {{ __('Actualitzar Equip') }}
+            </x-primary-button>
+        </div>
+    </form>
+</div>
 @endsection

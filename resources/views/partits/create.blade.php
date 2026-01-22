@@ -1,68 +1,44 @@
 @extends('layouts.equip')
-@section('title', 'Afegir nou partit')
+
+@section('title', __('Afegir nou partit'))
 
 @section('content')
-<h1 class="text-2xl font-bold mb-4">Afegir nou partit</h1>
+<div class="max-w-2xl mx-auto">
+    <form action="{{ route('partits.store') }}" method="POST" class="space-y-6">
+        @csrf
 
-@if ($errors->any())
-  <div class="bg-red-100 text-red-700 p-2 mb-4">
-    <ul>
-      @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-@endif
+        <div class="space-y-2">
+            <x-input-label for="local" :value="__('Local')" />
+            <x-text-input id="local" name="local" type="text" :value="old('local')" required autofocus />
+            <x-input-error :messages="$errors->get('local')" />
+        </div>
 
-<form action="{{ route('partits.store') }}" method="POST" class="space-y-4">
-  @csrf
-  <div>
-    <label for="local" class="block font-bold">Local:</label>
-    <input
-      type="text"
-      name="local"
-      id="local"
-      value="{{ old('local') }}"
-      class="border p-2 w-full"
-    >
-  </div>
+        <div class="space-y-2">
+            <x-input-label for="visitant" :value="__('Visitant')" />
+            <x-text-input id="visitant" name="visitant" type="text" :value="old('visitant')" required />
+            <x-input-error :messages="$errors->get('visitant')" />
+        </div>
 
-  <div>
-    <label for="visitant" class="block font-bold">Visitant:</label>
-    <input
-      type="text"
-      name="visitant"
-      id="visitant"
-      value="{{ old('visitant') }}"
-      class="border p-2 w-full"
-    >
-  </div>
+        <div class="space-y-2">
+            <x-input-label for="data" :value="__('Data')" />
+            <x-text-input id="data" name="data" type="date" :value="old('data')" required />
+            <x-input-error :messages="$errors->get('data')" />
+        </div>
 
-  <div>
-    <label for="data" class="block font-bold">Data:</label>
-    <input
-      type="date"
-      name="data"
-      id="data"
-      value="{{ old('data') }}"
-      class="border p-2 w-full"
-    >
-  </div>
+        <div class="space-y-2">
+            <x-input-label for="resultat" :value="__('Resultat (opcional)')" />
+            <x-text-input id="resultat" name="resultat" type="text" :value="old('resultat')" placeholder="Ex: 2-1" />
+            <x-input-error :messages="$errors->get('resultat')" />
+        </div>
 
-  <div>
-    <label for="resultat" class="block font-bold">Resultat (opcional):</label>
-    <input
-      type="text"
-      name="resultat"
-      id="resultat"
-      value="{{ old('resultat') }}"
-      class="border p-2 w-full"
-      placeholder="Ex: 2-1"
-    >
-  </div>
-
-  <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
-    Afegir
-  </button>
-</form>
+        <div class="flex items-center justify-end gap-4 pt-4">
+            <a href="{{ route('partits.index') }}" class="btn btn--ghost">
+                {{ __('Cancel·lar') }}
+            </a>
+            <x-primary-button>
+                {{ __('Afegir Partit') }}
+            </x-primary-button>
+        </div>
+    </form>
+</div>
 @endsection

@@ -4,6 +4,21 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EquipController;
 use App\Http\Controllers\EstadiController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session; // 👈 AFEGEIX AIXÒ
+
+
+// ✅ Ruta per canviar idioma (i18n) 👈 AFEGEIX AIXÒ
+Route::get('/locale/{locale}', function (string $locale) {
+    $available = ['ca', 'es', 'en'];
+
+    if (!in_array($locale, $available, true)) {
+        $locale = config('app.fallback_locale', 'en');
+    }
+
+    Session::put('locale', $locale);
+
+    return redirect()->back();
+})->name('setLocale');
 
 Route::get('/', function () {
     return view('welcome');
