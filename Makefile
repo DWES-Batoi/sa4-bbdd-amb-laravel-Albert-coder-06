@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+.PHONY: up down reset sh logs install migrate test artisan
 
 up:
 	docker compose up -d --build
@@ -11,7 +12,7 @@ reset:
 	rm -rf vendor node_modules bootstrap/cache/*.php public/storage
 	rm -f .env
 
-sh:
+sh:dd
 	docker compose exec -u www-data app bash
 
 logs:
@@ -21,9 +22,9 @@ install:
 	# Crea Laravel solo si no existe (no pisa nada)
 	if [ ! -f artisan ]; then \
 		docker compose run --rm app bash -lc 'set -e; \
-		  composer create-project laravel/laravel /tmp/laravel; \
-		  shopt -s dotglob; \
-		  cp -an /tmp/laravel/* /var/www/html/'; \
+			composer create-project laravel/laravel /tmp/laravel; \
+			shopt -s dotglob; \
+			cp -an /tmp/laravel/* /var/www/html/'; \
 	fi
 	cp -n .env.example .env || true
 	docker compose run --rm app php artisan key:generate
@@ -37,5 +38,9 @@ test:
 
 artisan:
 	@docker compose run --rm app php artisan $(CMD)
+	@true
+
+composer:
+	@docker compose run --rm app composer $(CMD)
 	@true
 
