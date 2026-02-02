@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('nom')->unique();
             $table->string('posicio');
-            $table->foreignId('equip')->constrained('equips')->onDelete('cascade');
+            $table->unsignedInteger('dorsal')->nullable();
+            $table->unsignedInteger('edat')->nullable();
+            $table->foreignId('equip_id')->constrained('equips')->onDelete('cascade');
             $table->timestamps();
         });
     }

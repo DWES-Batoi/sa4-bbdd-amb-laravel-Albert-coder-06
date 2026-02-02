@@ -20,7 +20,7 @@
 
             <div class="card__body">
                 <p><strong>{{ __('Posició') }}:</strong> {{ $jugadora->posicio }}</p>
-                <p><strong>{{ __('Equip') }}:</strong> {{ $jugadora->equip_rel?->nom ?? __('Sense equip') }}</p>
+                <p><strong>{{ __('Equip') }}:</strong> {{ $jugadora->equip?->nom ?? __('Sense equip') }}</p>
             </div>
 
             <footer class="card__footer">

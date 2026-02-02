@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JugadoraRequest;
 use App\Http\Resources\JugadoraResource;
+use Illuminate\Http\Request;
 use App\Models\Jugadora;
 
 class JugadoraController extends Controller

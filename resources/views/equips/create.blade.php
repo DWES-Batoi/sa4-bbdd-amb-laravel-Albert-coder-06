@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-2xl mx-auto">
-    <form action="{{ route('equips.store') }}" method="POST" class="space-y-6">
+    <form action="{{ route('equips.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
 
         <div class="space-y-2">
@@ -29,6 +29,12 @@
             <x-input-label for="titols" :value="__('Títols')" />
             <x-text-input id="titols" name="titols" type="number" :value="old('titols')" required />
             <x-input-error :messages="$errors->get('titols')" />
+        </div>
+
+        <div class="space-y-2">
+            <x-input-label for="escut" :value="__('Escut')" />
+            <x-text-input id="escut" name="escut" type="file" />
+            <x-input-error :messages="$errors->get('escut')" />
         </div>
 
         <div class="flex items-center justify-end gap-4 pt-4">

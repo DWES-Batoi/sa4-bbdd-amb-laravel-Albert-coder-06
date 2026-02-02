@@ -29,7 +29,7 @@ class EquipController extends Controller
         $data = $request->validated();
         $escut = $request->file('escut');
         $this->servei->guardar($data, $escut);
-        return redirect()->route('equips.index');
+        return redirect()->route('equips.index')->with('success', 'Equip guardat correctament');
     }
 
     // GET /equips/{equip}
@@ -48,12 +48,12 @@ class EquipController extends Controller
         $data = $request->validated();
         $nouEscut = $request->file('escut');
         $this->servei->actualitzar($equip->id, $data, $nouEscut);
-        return redirect()->route('equips.index');
+        return redirect()->route('equips.index')->with('success', 'Equip actualitzat correctament');
     }
 
     // DELETE /equips/{equip}
     public function destroy(Equip $equip) {
         $this->servei->eliminar($equip->id);
-        return redirect()->route('equips.index');
+        return redirect()->route('equips.index')->with('success', 'Equip eliminat correctament');
     }
 }

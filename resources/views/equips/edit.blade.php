@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-2xl mx-auto">
-    <form action="{{ route('equips.update', $equip) }}" method="POST" class="space-y-6">
+    <form action="{{ route('equips.update', $equip) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
         @method('PUT')
 
@@ -30,6 +30,18 @@
             <x-input-label for="titols" :value="__('Títols')" />
             <x-text-input id="titols" name="titols" type="number" :value="old('titols', $equip->titols)" required />
             <x-input-error :messages="$errors->get('titols')" />
+        </div>
+
+        <div class="space-y-2">
+            <x-input-label for="escut" :value="__('Escut')" />
+            @if($equip->escut)
+                <div class="flex items-center gap-4 mb-2">
+                    <img src="{{ asset('storage/' . $equip->escut) }}" alt="{{ $equip->nom }}" class="object-contain rounded border border-slate-200" width="100" height="100">
+                    <span class="text-sm text-slate-500">{{ __('Escut actual') }}</span>
+                </div>
+            @endif
+            <x-text-input id="escut" name="escut" type="file" />
+            <x-input-error :messages="$errors->get('escut')" />
         </div>
 
         <div class="flex items-center justify-end gap-4 pt-4">

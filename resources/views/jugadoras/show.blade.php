@@ -6,6 +6,6 @@
     <x-jugadora
         :nom="$jugadora->nom"
         :posicio="$jugadora->posicio"
-        :equip="$jugadora->equip_rel?->nom ?? __('Sense equip')"
+        :equip="$jugadora->equip?->nom ?? __('Sense equip')"
     />
 @endsection

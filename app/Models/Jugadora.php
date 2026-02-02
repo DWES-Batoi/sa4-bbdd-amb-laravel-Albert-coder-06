@@ -17,10 +17,10 @@ class Jugadora extends Model
     ];
     
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function equip_rel()
+    public function equip()
     {
-        return $this->belongsTo(Equip::class, 'equip');
+        return $this->belongsTo(Equip::class, 'equip_id');
     }
 }

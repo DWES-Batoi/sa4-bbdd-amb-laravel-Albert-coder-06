@@ -15,7 +15,7 @@ class JugadoraFactory extends Factory
         return [
             'nom' => $this->faker->unique()->name,
             'posicio' => $this->faker->randomElement(['Portera', 'Defensa', 'Migcampista', 'Davantera']),
-            'equip' => Equip::factory(),
+            'equip_id' => Equip::factory(),
         ];
     }
 }

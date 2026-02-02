@@ -18,7 +18,7 @@ class JugadorasSeeder extends Seeder
 
         foreach ($equips as $equip) {
             Jugadora::factory()->count(5)->create([
-                'equip' => $equip->id,
+                'equip_id' => $equip->id,
             ]);
         }
     }
