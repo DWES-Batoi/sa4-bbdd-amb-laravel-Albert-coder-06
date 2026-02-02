@@ -25,6 +25,7 @@ class UpdateEquipRequest extends FormRequest
             'nom'       => 'required|min:3',
             'estadi_id' => 'required|integer|exists:estadis,id',
             'titols'    => 'required|integer|min:0',
+            'escut'     => 'nullable|image|max:2048',
         ];
     }
 }

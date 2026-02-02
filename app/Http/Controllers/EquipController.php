@@ -26,7 +26,9 @@ class EquipController extends Controller
 
     // POST /equips
     public function store(StoreEquipRequest $request) {
-        $this->servei->guardar($request->validated());
+        $data = $request->validated();
+        $escut = $request->file('escut');
+        $this->servei->guardar($data, $escut);
         return redirect()->route('equips.index');
     }
 
@@ -43,7 +45,9 @@ class EquipController extends Controller
 
     // PUT /equips/{equip}
     public function update(UpdateEquipRequest $request, Equip $equip) {
-        $this->servei->actualitzar($equip->id, $request->validated());
+        $data = $request->validated();
+        $nouEscut = $request->file('escut');
+        $this->servei->actualitzar($equip->id, $data, $nouEscut);
         return redirect()->route('equips.index');
     }
 

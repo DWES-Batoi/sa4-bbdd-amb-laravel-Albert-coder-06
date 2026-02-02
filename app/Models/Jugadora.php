@@ -12,7 +12,10 @@ class Jugadora extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'posicio', 'equip'];
+    protected $fillable = [
+        'nom', 'equip_id', 'posicio', 'dorsal', 'edat',
+    ];
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
