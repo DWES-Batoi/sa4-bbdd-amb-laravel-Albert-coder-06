@@ -12,7 +12,7 @@ reset:
 	rm -rf vendor node_modules bootstrap/cache/*.php public/storage
 	rm -f .env
 
-sh:dd
+sh:
 	docker compose exec -u www-data app bash
 
 logs:
@@ -43,4 +43,10 @@ artisan:
 composer:
 	@docker compose run --rm app composer $(CMD)
 	@true
+	
+reverb:
+	docker compose exec app php artisan reverb:start --port=8081
+
+queue:
+	docker compose exec app php artisan queue:work
 
