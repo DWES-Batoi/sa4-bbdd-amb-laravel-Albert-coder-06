@@ -28,6 +28,10 @@
                         {{ __('Jugadoras') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('classificacio.index')" :active="request()->routeIs('classificacio.*')">
+                        {{ __('Classificació') }}
+                    </x-nav-link>
+
                     @auth
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-sm font-medium">
                             {{ __('Dashboard') }}
@@ -142,6 +146,10 @@
 
             <x-responsive-nav-link :href="route('jugadoras.index')" :active="request()->routeIs('jugadoras.*')" class="rounded-xl">
                 {{ __('Jugadoras') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('classificacio.index')" :active="request()->routeIs('classificacio.*')" class="rounded-xl">
+                {{ __('Classificació') }}
             </x-responsive-nav-link>
 
             @auth

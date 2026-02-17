@@ -12,7 +12,18 @@ class Partit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['local', 'visitant', 'data', 'resultat'];
+    protected $fillable = [
+        'local_id',
+        'visitant_id',
+        'estadi_id',
+        'data',
+        'jornada',
+        'gols_local',
+        'gols_visitant',
+        'local',
+        'visitant',
+        'resultat'
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
