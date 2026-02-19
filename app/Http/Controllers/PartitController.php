@@ -39,8 +39,35 @@ class PartitController extends Controller
     // POST /partits
     public function store(StorePartitRequest $request)
     {
+
+        // 1) posicions abans
+        $abans = $this->classificacioService->posicionsPerEquip();
+
+        // 2) actualitza el partit
         $this->partitService->guardar($request->validated());
-        return redirect()->route('partits.index');
+
+        // 3) posicions després
+        $despres = $this->classificacioService->posicionsPerEquip();
+
+        // 4) calcula delta (+ = puja, - = baixa)
+        $delta = [];
+        foreach ($despres as $equipId => $posDespres) {
+            $posAbans = $abans[$equipId] ?? $posDespres;
+            $deltaPos = $posAbans - $posDespres;
+            if ($deltaPos !== 0) {
+                $delta[] = ['equip_id' => $equipId, 'delta' => $deltaPos];
+            }
+        }
+
+
+        // 5) emet event 
+        if (!empty($delta)) {
+            event(new PartitActualitzat($delta));
+        }
+        
+
+        return redirect()->route('partits.index')->with('success', 'Partit creat.');
+
     }
 
     // GET /partits/{partit}
@@ -60,8 +87,6 @@ class PartitController extends Controller
     public function update(UpdatePartitRequest $request, Partit $partit)
     {
         $data = $request->validated();
-
-        error_log("DEBUG: Iniciant update de partit " . $partit->id);
 
         // 1) posicions abans
         $abans = $this->classificacioService->posicionsPerEquip();

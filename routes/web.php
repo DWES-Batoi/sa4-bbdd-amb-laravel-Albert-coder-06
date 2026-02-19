@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EquipController;
 use App\Http\Controllers\EstadiController;
 use Illuminate\Support\Facades\Route;

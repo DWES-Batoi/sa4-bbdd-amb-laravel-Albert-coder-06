@@ -5,11 +5,15 @@ services:
       dockerfile: Dockerfile
     container_name: futbol-app
     working_dir: /var/www/html
+    environment:
+      LLM_BASE_URL: http://ollama:11434
+      LLM_MODEL: tinyllama:1.1b
     volumes:
       - ./:/var/www/html
     depends_on:
       - db
       - redis
+      - ollama
     ports: 
       - "8081:8081"
 
@@ -58,6 +62,15 @@ services:
       # PMA_ARBITRARY: 1
     ports:
       - "8080:80"
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"   # opcional: per provar des del teu PC
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
 
 volumes:
   db-data:
+  ollama_data:

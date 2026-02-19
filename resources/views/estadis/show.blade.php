@@ -6,5 +6,6 @@
     :nom="$estadi->nom"
     :capacitat="$estadi->capacitat"
     :equips="$estadi->equips"
+    :descripcio="$descripcio"
   />
 @endsection

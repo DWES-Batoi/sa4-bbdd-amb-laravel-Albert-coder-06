@@ -1,4 +1,4 @@
-@props(['nom', 'capacitat', 'equips' => collect()])
+@props(['nom', 'capacitat', 'equips' => collect(), 'descripcio'])
 
 <article class="card max-w-2xl mx-auto">
     <header class="card__header">
@@ -29,6 +29,19 @@
                 @endforelse
             </div>
         </div>
+
+        <div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl">
+            <p class="text-xs text-slate-400 uppercase font-bold tracking-wider mb-3">{{ __('Descripció (IA local)') }}</p>
+            <div class="flex flex-wrap gap-2">
+                @if(!empty($descripcio))
+                    <p>{{ $descripcio }}</p>
+                @else
+                    <p><em>No s’ha pogut generar la descripció ara mateix.</em></p>
+                @endif
+            </div>
+        </div>
+
+
     </div>
 
     <footer class="card__footer justify-center">
