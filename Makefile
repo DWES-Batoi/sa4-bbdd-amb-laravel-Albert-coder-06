@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+.PHONY: up down reset sh logs install migrate test artisan ollama-pull ollama-tags ollama-generate
 
 up:
 	docker compose up -d --build
@@ -21,9 +22,9 @@ install:
 	# Crea Laravel solo si no existe (no pisa nada)
 	if [ ! -f artisan ]; then \
 		docker compose run --rm app bash -lc 'set -e; \
-		  composer create-project laravel/laravel /tmp/laravel; \
-		  shopt -s dotglob; \
-		  cp -an /tmp/laravel/* /var/www/html/'; \
+			composer create-project laravel/laravel /tmp/laravel; \
+			shopt -s dotglob; \
+			cp -an /tmp/laravel/* /var/www/html/'; \
 	fi
 	cp -n .env.example .env || true
 	docker compose run --rm app php artisan key:generate
@@ -38,4 +39,25 @@ test:
 artisan:
 	@docker compose run --rm app php artisan $(CMD)
 	@true
+
+composer:
+	@docker compose run --rm app composer $(CMD)
+	@true
+
+reverb:
+	docker compose exec app php artisan reverb:start --port=8081
+
+queue:
+	docker compose exec app php artisan queue:work
+
+ollama-pull:
+	docker compose exec ollama ollama pull tinyllama:1.1b
+
+ollama-tags:
+	docker compose exec app curl -sS http://ollama:11434/api/tags | head -n 60
+
+ollama-generate:
+	docker compose exec app curl -sS http://ollama:11434/api/generate \
+		-H "Content-Type: application/json" \
+		-d '{"model":"tinyllama:1.1b","prompt":"Escriu una frase curta sobre un estadi.","stream":false}'
 
